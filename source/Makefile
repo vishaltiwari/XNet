@@ -11,7 +11,8 @@ XNET_DIR = .
 ## Include options for build configurations defined in Makefile.opt
 include $(XNET_DIR)/Makefile.opt
 
-HELMHOLTZ_PATH = ../../../EOS/Helmholtz
+##HELMHOLTZ_PATH = ../../../EOS/Helmholtz
+HELMHOLTZ_PATH = ../helmholtz
 #-------------------------------------------------------------------------------------------------
 # The rules below are used by make to build a range of executables
 # Users should not need to modify this portion of the Makefile

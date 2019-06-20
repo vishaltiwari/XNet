@@ -303,21 +303,21 @@ ifeq ($(UNAME_S),Darwin)
 else
     MKL_OS = lnx
 endif
-ifneq ("$(wildcard ${MKLROOT}/tools/mkl_link_tool)","")
-    ifeq ($(PE_ENV),INTEL)
-        MKL_INC  != ${MKLROOT}/tools/mkl_link_tool -opts --quiet --parallel=no --compiler=intel_f --os=${MKL_OS} --linking=static
-        MKL_LIBS != ${MKLROOT}/tools/mkl_link_tool -libs --quiet --parallel=no --compiler=intel_f --os=${MKL_OS} --linking=static
-    else ifeq ($(PE_ENV),PGI)
-        MKL_INC  != ${MKLROOT}/tools/mkl_link_tool -opts --quiet --parallel=no --compiler=pgi_f --os=${MKL_OS} --linking=static
-        MKL_LIBS != ${MKLROOT}/tools/mkl_link_tool -libs --quiet --parallel=no --compiler=pgi_f --os=${MKL_OS} --linking=static
-    else ifeq ($(PE_ENV),GNU)
-        MKL_INC  != ${MKLROOT}/tools/mkl_link_tool -opts --quiet --parallel=no --compiler=gnu_f --os=${MKL_OS} --linking=static
-        MKL_LIBS != ${MKLROOT}/tools/mkl_link_tool -libs --quiet --parallel=no --compiler=gnu_f --os=${MKL_OS} --linking=static
-    else ifeq ($(PE_ENV),CRAY)
-        MKL_INC  != ${MKLROOT}/tools/mkl_link_tool -opts --quiet --parallel=no --compiler=gnu_f --os=${MKL_OS} --linking=static
-        MKL_LIBS != ${MKLROOT}/tools/mkl_link_tool -libs --quiet --parallel=no --compiler=gnu_f --os=${MKL_OS} --linking=static
-    endif
-endif
+#ifneq ("$(wildcard ${MKLROOT}/tools/mkl_link_tool)","")
+#    ifeq ($(PE_ENV),INTEL)
+#        MKL_INC  != ${MKLROOT}/tools/mkl_link_tool -opts --quiet --parallel=no --compiler=intel_f --os=${MKL_OS} --linking=static
+#        MKL_LIBS != ${MKLROOT}/tools/mkl_link_tool -libs --quiet --parallel=no --compiler=intel_f --os=${MKL_OS} --linking=static
+#    else ifeq ($(PE_ENV),PGI)
+#        MKL_INC  != ${MKLROOT}/tools/mkl_link_tool -opts --quiet --parallel=no --compiler=pgi_f --os=${MKL_OS} --linking=static
+#        MKL_LIBS != ${MKLROOT}/tools/mkl_link_tool -libs --quiet --parallel=no --compiler=pgi_f --os=${MKL_OS} --linking=static
+#    else ifeq ($(PE_ENV),GNU)
+#        MKL_INC  != ${MKLROOT}/tools/mkl_link_tool -opts --quiet --parallel=no --compiler=gnu_f --os=${MKL_OS} --linking=static
+#        MKL_LIBS != ${MKLROOT}/tools/mkl_link_tool -libs --quiet --parallel=no --compiler=gnu_f --os=${MKL_OS} --linking=static
+#    else ifeq ($(PE_ENV),CRAY)
+#        MKL_INC  != ${MKLROOT}/tools/mkl_link_tool -opts --quiet --parallel=no --compiler=gnu_f --os=${MKL_OS} --linking=static
+#        MKL_LIBS != ${MKLROOT}/tools/mkl_link_tool -libs --quiet --parallel=no --compiler=gnu_f --os=${MKL_OS} --linking=static
+#    endif
+#endif
 
 ## Mac Accelerate Framework
 ACCEL_INC      = -framework Accelerate
