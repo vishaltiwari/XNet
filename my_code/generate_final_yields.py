@@ -8,6 +8,8 @@ matplotlib.use('agg')
 import pdb
 import matplotlib.pyplot as plt
 
+from read_ts_file import *
+
 
 def plot_abund(abundance_dict_time , sym_list,file_name,sim_time):
   #pdb.set_trace()
@@ -43,24 +45,26 @@ def plot_abund(abundance_dict_time , sym_list,file_name,sim_time):
   plt.savefig(plot_name,bbox_inches="tight")
   plt.clf()
 
+def save_final_yields(abund_dic_time,sym_list,outfilename):
+  fileobj = open(outfilename,"w")
+  for sym in sym_list:
+    fileobj.write(sym + " " + str(abund_dic_time[sym][-1])+"\n")
+  fileobj.close()
+
 def main():
-  #print('This is Main')
-<<<<<<< Updated upstream
-  file_dir = './'
-=======
-  file_dir = '../run_SN150_2/'
->>>>>>> Stashed changes
-  file_name = 'tso1_150_rho1e9_T5e9_.mat'
+  file_dir = '../NSE_Tests/alpha_test/tss/'
+  file_name = 'ts_tnsn_alpha_1'
   filepath = file_dir + file_name
   ele_filename = 'Z_file.csv'
-  x = loadmat(filepath)
-  data = x['data']
-  sim_time = x['sim_time']
-  pdb.set_trace()
-  nb_timesteps = data.shape[0] - 2
-  nb_nuclides = data.shape[1]
-  zz = data[0,:]
-  aa = data[1,:]
+  #x = loadmat(filepath)
+  #data = x['data']
+  #sim_time = x['sim_time']
+  #pdb.set_trace()
+  zz, aa, xmf, time, temperature, density, timestep, edot, flx_end, flx = read_ts_file(filepath)
+  #nb_timesteps = data.shape[0] - 2
+  #nb_nuclides = data.shape[1]
+  #zz = data[0,:]
+  #aa = data[1,:]
   
   #pdb.set_trace()
 
@@ -79,18 +83,19 @@ def main():
   for indx, Z in enumerate(zz):
     Z = int(Z)
     A = int(aa[indx])
-    sym = Z_sym_dic[Z]
+    sym = Z_sym_dic[Z].lower()
     if sym == 'p' or sym == 'n':
       nuclide = sym
     else:
       nuclide = sym + str(A)
     
-    ab_ndarr = mass_frac_time = data[2:,indx]
+    ab_ndarr = mass_frac_time = xmf[:,indx]
     abund_dic_time[nuclide] = ab_ndarr
     sym_list.append(nuclide)
-    print(nuclide.lower() +" "+ str(data[-1,indx]))
-  pdb.set_trace()
-  plot_abund(abund_dic_time , sym_list , file_name,sim_time)
+    #print(nuclide.lower() +" "+ str(data[-1,indx]))
+  #pdb.set_trace()
+  plot_abund(abund_dic_time , sym_list , file_name,time)
+  save_final_yields(abund_dic_time,sym_list,file_name+'_yield.txt')
 
 if __name__ == '__main__':
   main()
