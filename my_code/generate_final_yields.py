@@ -13,7 +13,8 @@ from read_ts_file import *
 
 def plot_abund(abundance_dict_time , sym_list,file_name,sim_time):
   #pdb.set_trace()
-  plot_name = file_name.split('.')[0]+"_mass_fraction.png"
+  plot_dir = './plots/'
+  plot_name = plot_dir + file_name.split('.')[0]+"_mass_fraction.png"
   sym_abund = {}
   thres_abund = 1e-2
   all_legends = []
@@ -46,14 +47,16 @@ def plot_abund(abundance_dict_time , sym_list,file_name,sim_time):
   plt.clf()
 
 def save_final_yields(abund_dic_time,sym_list,outfilename):
-  fileobj = open(outfilename,"w")
+  fileobj = open('./data/'+outfilename,"w")
   for sym in sym_list:
     fileobj.write(sym + " " + str(abund_dic_time[sym][-1])+"\n")
   fileobj.close()
 
 def main():
-  file_dir = '../NSE_Tests/alpha_test/tss/'
-  file_name = 'ts_tnsn_alpha_1'
+  #file_dir = '../NSE_Tests/alpha_test/tss/'
+  #file_name = 'ts_tnsn_alpha_1'
+  file_dir = '../NSE_Tests/SN150_Test/tss/'
+  file_name = 'ts_tnsn_SN150_1'
   filepath = file_dir + file_name
   ele_filename = 'Z_file.csv'
   #x = loadmat(filepath)
@@ -70,8 +73,8 @@ def main():
 
   file_obj = open(ele_filename,"r")
   Z_sym_dic = {}
-  Z_sym_dic[0] = 'n'
-  Z_sym_dic[1] = 'p'
+  #Z_sym_dic[0] = 'n'
+  #Z_sym_dic[1] = 'p'
   for line in file_obj:
     Z = int(line.split(',')[0])
     sym = line.split(',')[1].split('\n')[0]
@@ -80,14 +83,18 @@ def main():
 
   abund_dic_time = {}
   sym_list = []
-  for indx, Z in enumerate(zz):
-    Z = int(Z)
-    A = int(aa[indx])
-    sym = Z_sym_dic[Z].lower()
-    if sym == 'p' or sym == 'n':
-      nuclide = sym
+  pdb.set_trace()
+  for indx, A in enumerate(aa):
+    Z = int(zz[indx])
+    A = int(A)
+    sym = Z_sym_dic[Z]
+    if A == 2 and Z == 1:
+      nuclide = 'd'
+    elif sym == 'p' or sym == 'n':
+      pdb.set_trace()
+      nuclide = sym.lower()
     else:
-      nuclide = sym + str(A)
+      nuclide = sym.lower() + str(A)
     
     ab_ndarr = mass_frac_time = xmf[:,indx]
     abund_dic_time[nuclide] = ab_ndarr
